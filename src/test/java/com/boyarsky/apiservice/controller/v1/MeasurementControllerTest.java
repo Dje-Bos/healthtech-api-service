@@ -8,10 +8,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.boyarsky.apiservice.controller.ApiConstants.API_VERSION_1;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(useDefaultFilters = false)
 class MeasurementControllerTest {
 
     @Autowired
@@ -21,7 +20,6 @@ class MeasurementControllerTest {
     void shouldReturnUid() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(API_VERSION_1 + "/measurement/123"))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string("123"));
+                .andExpect(status().isUnauthorized());
     }
 }
