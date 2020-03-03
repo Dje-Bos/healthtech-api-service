@@ -6,8 +6,10 @@ import com.boyarsky.apiservice.entity.Role;
 import com.boyarsky.apiservice.entity.User;
 import com.boyarsky.apiservice.exception.OAuth2AuthenticationProcessingException;
 import com.boyarsky.apiservice.repository.UserRepository;
+import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,20 +18,20 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
+    private UserRolesRepository userRolesRepository;
 
-    private final EntityManager entityManager;
-
-    public CustomOAuth2UserService(UserRepository userRepository, EntityManager entityManager) {
+    @Autowired
+    public CustomOAuth2UserService(UserRepository userRepository, UserRolesRepository userRolesRepository) {
         this.userRepository = userRepository;
-        this.entityManager = entityManager;
+        this.userRolesRepository = userRolesRepository;
     }
 
     @Override
@@ -76,8 +78,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setName(oAuth2UserInfoDTO.getName());
         user.setEmail(oAuth2UserInfoDTO.getEmail());
         user.setPictureUrl(oAuth2UserInfoDTO.getImageUrl());
-        Role role = new Role("user", "plain user role");
-        user.setRoles(Set.of(role));
+        Optional<Role> userRole = userRolesRepository.getRoleByUid("USER");
+        if (userRole.isPresent()) {
+            user.setRoles(Set.of(userRole.get()));
+        } else {
+            Role role = new Role("USER", "plain user role");
+            user.setRoles(Set.of(role));
+        }
 //                user.setImageUrl(oAuth2UserInfoDTO.getImageUrl());
         return userRepository.save(user);
     }

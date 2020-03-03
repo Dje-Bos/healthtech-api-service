@@ -108,7 +108,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository())
                 .and()
                 .redirectionEndpoint()
-                .baseUri("/oauth2/callback/google")
+                .baseUri("/login/oauth2/code/google")
                 .and()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)

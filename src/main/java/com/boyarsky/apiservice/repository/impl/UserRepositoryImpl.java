@@ -1,29 +1,21 @@
 package com.boyarsky.apiservice.repository.impl;
 
-import com.boyarsky.apiservice.entity.Role;
 import com.boyarsky.apiservice.entity.User;
 import com.boyarsky.apiservice.repository.DataJpaUserRepository;
 import com.boyarsky.apiservice.repository.UserRepository;
-import com.boyarsky.apiservice.repository.UserRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional(readOnly = true)
 public class UserRepositoryImpl implements UserRepository {
 
     private DataJpaUserRepository repository;
-    private UserRolesRepository userRolesRepository;
 
     @Autowired
-    public UserRepositoryImpl(DataJpaUserRepository repository, UserRolesRepository userRolesRepository) {
+    public UserRepositoryImpl(DataJpaUserRepository repository) {
         this.repository = repository;
-        this.userRolesRepository = userRolesRepository;
     }
 
     @Override
@@ -43,12 +35,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    @Transactional
     public User save(User userModel) {
-        if (userModel.getRoles() != null) {
-            Set<Role> roles = userModel.getRoles().stream().map(Role::getUid).map(userRolesRepository::getRoleEntityByUid).collect(Collectors.toSet());
-            userModel.setRoles(roles);
-        }
         return repository.save(userModel);
     }
 }

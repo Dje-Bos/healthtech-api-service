@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-@NamedQuery(name = "getUserByEmail", query = "SELECT user FROM User user WHERE user.email = :email")
+@NamedQuery(name = "getUserByEmail", query = "FROM User WHERE email = :email")
 public class User implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
