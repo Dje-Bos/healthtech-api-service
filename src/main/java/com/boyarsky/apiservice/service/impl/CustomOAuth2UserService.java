@@ -1,13 +1,12 @@
-package com.boyarsky.apiservice.service;
+package com.boyarsky.apiservice.service.impl;
 
-import com.boyarsky.apiservice.dto.OAuth2UserInfoDTO;
+import com.boyarsky.apiservice.dto.OAuth2UserInfoDto;
 import com.boyarsky.apiservice.entity.AuthType;
-import com.boyarsky.apiservice.entity.Role;
 import com.boyarsky.apiservice.entity.User;
 import com.boyarsky.apiservice.exception.OAuth2AuthenticationProcessingException;
 import com.boyarsky.apiservice.repository.UserRepository;
-import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
+import com.boyarsky.apiservice.service.UserRolesService;
 import com.boyarsky.apiservice.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -19,19 +18,18 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private UserRepository userRepository;
-    private UserRolesRepository userRolesRepository;
+    private UserRolesService userRolesService;
 
     @Autowired
-    public CustomOAuth2UserService(UserRepository userRepository, UserRolesRepository userRolesRepository) {
+    public CustomOAuth2UserService(UserRepository userRepository, UserRolesService userRolesService) {
         this.userRepository = userRepository;
-        this.userRolesRepository = userRolesRepository;
+        this.userRolesService = userRolesService;
     }
 
     @Override
@@ -51,14 +49,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         String upperCaseRegistration = oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase();
-        OAuth2UserInfoDTO oAuth2UserInfoDTO = OAuth2UserInfoFactory.getOAuth2UserInfo(upperCaseRegistration, oAuth2User.getAttributes());
-        if(StringUtil.isBlank(oAuth2UserInfoDTO.getEmail())) {
+        OAuth2UserInfoDto oAuth2UserInfoDTO = OAuth2UserInfoFactory.getOAuth2UserInfo(upperCaseRegistration, oAuth2User.getAttributes());
+        if (StringUtil.isBlank(oAuth2UserInfoDTO.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
 
         User user = userRepository.getUserByEmail(oAuth2UserInfoDTO.getEmail());
-        if(user != null) {
-            if(!user.getAuth().equals(AuthType.valueOf(upperCaseRegistration))) {
+        if (user != null) {
+            if (!user.getAuth().equals(AuthType.valueOf(upperCaseRegistration))) {
                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
                         user.getAuth() + " account. Please use your " + user.getAuth() +
                         " account to login.");
@@ -71,27 +69,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
-    private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfoDTO oAuth2UserInfoDTO) {
+    private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfoDto oAuth2UserInfoDTO) {
         User user = new User();
 
         user.setAuth(AuthType.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase()));
         user.setName(oAuth2UserInfoDTO.getName());
         user.setEmail(oAuth2UserInfoDTO.getEmail());
         user.setPictureUrl(oAuth2UserInfoDTO.getImageUrl());
-        Optional<Role> userRole = userRolesRepository.getRoleByUid("USER");
-        if (userRole.isPresent()) {
-            user.setRoles(Set.of(userRole.get()));
-        } else {
-            Role role = new Role("USER", "plain user role");
-            user.setRoles(Set.of(role));
-        }
-//                user.setImageUrl(oAuth2UserInfoDTO.getImageUrl());
+
+        user.setRoles(Set.of(userRolesService.createOrGetByUid("USER")));
+        user.setPictureUrl(oAuth2UserInfoDTO.getImageUrl());
         return userRepository.save(user);
     }
 
-    private User updateExistingUser(User existingUser, OAuth2UserInfoDTO oAuth2UserInfoDTO) {
+    private User updateExistingUser(User existingUser, OAuth2UserInfoDto oAuth2UserInfoDTO) {
         existingUser.setName(oAuth2UserInfoDTO.getName());
-//        existingUser.setImageUrl(oAuth2UserInfoDTO.getImageUrl());
+        existingUser.setPictureUrl(oAuth2UserInfoDTO.getImageUrl());
         return userRepository.save(existingUser);
     }
 

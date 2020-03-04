@@ -1,4 +1,4 @@
-package com.boyarsky.apiservice.service;
+package com.boyarsky.apiservice.service.impl;
 
 import com.boyarsky.apiservice.config.AppProperties;
 import com.boyarsky.apiservice.security.UserPrincipal;

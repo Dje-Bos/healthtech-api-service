@@ -1,7 +1,7 @@
 package com.boyarsky.apiservice.security;
 
-import com.boyarsky.apiservice.service.DefaultUserDetailsService;
-import com.boyarsky.apiservice.service.TokenProvider;
+import com.boyarsky.apiservice.service.impl.DefaultUserDetailsService;
+import com.boyarsky.apiservice.service.impl.TokenProvider;
 import com.boyarsky.apiservice.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

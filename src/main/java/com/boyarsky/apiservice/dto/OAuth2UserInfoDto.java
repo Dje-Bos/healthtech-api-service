@@ -2,10 +2,10 @@ package com.boyarsky.apiservice.dto;
 
 import java.util.Map;
 
-public abstract class OAuth2UserInfoDTO {
+public abstract class OAuth2UserInfoDto {
     protected Map<String, Object> attributes;
 
-    public OAuth2UserInfoDTO(Map<String, Object> attributes) {
+    public OAuth2UserInfoDto(Map<String, Object> attributes) {
         this.attributes = attributes;
     }
 

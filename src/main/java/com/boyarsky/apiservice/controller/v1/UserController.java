@@ -6,12 +6,11 @@ import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.security.CurrentUser;
 import com.boyarsky.apiservice.security.UserPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.annotation.Resource;
 
 import java.util.Optional;
 
@@ -22,11 +21,14 @@ import static java.lang.String.format;
 @RequestMapping(API_VERSION_1 + "/user")
 public class UserController {
 
-    @Resource
     private UserRepository userRepository;
-
-    @Resource
     private UserRolesRepository userRolesRepository;
+
+    @Autowired
+    public UserController(UserRepository userRepository, UserRolesRepository userRolesRepository) {
+        this.userRepository = userRepository;
+        this.userRolesRepository = userRolesRepository;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public User createUser(@RequestBody User userModel) {

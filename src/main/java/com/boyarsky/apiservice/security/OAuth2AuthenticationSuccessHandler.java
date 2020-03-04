@@ -2,7 +2,7 @@ package com.boyarsky.apiservice.security;
 
 import com.boyarsky.apiservice.config.AppProperties;
 import com.boyarsky.apiservice.exception.BadRequestException;
-import com.boyarsky.apiservice.service.TokenProvider;
+import com.boyarsky.apiservice.service.impl.TokenProvider;
 import com.boyarsky.apiservice.util.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

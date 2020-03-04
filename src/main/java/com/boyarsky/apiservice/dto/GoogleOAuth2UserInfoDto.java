@@ -2,9 +2,9 @@ package com.boyarsky.apiservice.dto;
 
 import java.util.Map;
 
-public class GoogleOAuth2UserInfoDTO extends OAuth2UserInfoDTO {
+public class GoogleOAuth2UserInfoDto extends OAuth2UserInfoDto {
 
-    public GoogleOAuth2UserInfoDTO(Map<String, Object> attributes) {
+    public GoogleOAuth2UserInfoDto(Map<String, Object> attributes) {
         super(attributes);
     }
 

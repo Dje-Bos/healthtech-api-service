@@ -1,8 +1,8 @@
 package com.boyarsky.apiservice.config;
 
 import com.boyarsky.apiservice.security.*;
-import com.boyarsky.apiservice.service.CustomOAuth2UserService;
-import com.boyarsky.apiservice.service.DefaultUserDetailsService;
+import com.boyarsky.apiservice.service.impl.CustomOAuth2UserService;
+import com.boyarsky.apiservice.service.impl.DefaultUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
