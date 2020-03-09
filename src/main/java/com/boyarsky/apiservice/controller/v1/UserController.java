@@ -4,11 +4,11 @@ import com.boyarsky.apiservice.entity.Role;
 import com.boyarsky.apiservice.entity.User;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.repository.UserRolesRepository;
-import com.boyarsky.apiservice.security.CurrentUser;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -52,7 +52,7 @@ public class UserController {
 
 
     @GetMapping("/me")
-    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+    public User getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         User userModel = userRepository.getUserById(userPrincipal.getId());
         if (userModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, format("User not found: uid=%s", userPrincipal.getId()));
