@@ -81,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.headers().frameOptions().sameOrigin().and()
                 .cors()
                 .and()
                 .sessionManagement()
@@ -97,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**", "/oauth2/**")
+                .antMatchers("/auth/**", "/oauth2/**","/h2-console/**", "/swagger-ui.html/**", "/api-docs/**", "/swagger-resources/**", "/webjars/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

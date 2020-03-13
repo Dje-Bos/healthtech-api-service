@@ -8,3 +8,9 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs

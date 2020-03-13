@@ -17,6 +17,11 @@ spring:
             clientId: 898313663527-uhui1u4verpq4joam69ulk4punetm9tb.apps.googleusercontent.com
             clientSecret: 6sIBJ8AshLW4YCwybqDHmSMd
             scope: email,profile
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
 
 app:
   auth:
