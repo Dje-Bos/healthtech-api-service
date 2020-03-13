@@ -1,0 +1,36 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format-sql: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 898313663527-uhui1u4verpq4joam69ulk4punetm9tb.apps.googleusercontent.com
+            clientSecret: 6sIBJ8AshLW4YCwybqDHmSMd
+            scope: email,profile
+
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000
+  oauth2:
+    authorizedRedirectUris: https://www.google.com,http://localhost:8080/logincallback
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
