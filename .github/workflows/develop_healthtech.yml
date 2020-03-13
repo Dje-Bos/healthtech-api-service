@@ -29,4 +29,4 @@ jobs:
         app-name: 'healthtech'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_b30fd1936a9d4bf295f32934a4f878e3 }}
-        package: '${{ github.workspace }}/target/*.jar'
+        package: '${{ github.workspace }}/build/libs/*.jar'
