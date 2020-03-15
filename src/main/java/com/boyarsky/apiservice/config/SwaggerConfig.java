@@ -20,16 +20,16 @@ public class SwaggerConfig {
     @Bean
     public Docket healthTechApi() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .securitySchemes(newArrayList(apiKey()))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.boyarsky.apiservice.controller.v1"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false)
-                .securitySchemes(newArrayList(apiKey()))
                 .enableUrlTemplating(true);
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("jwt", "api_key", "header");
+        return new ApiKey("JWT", "Authorization", "header");
     }
 }

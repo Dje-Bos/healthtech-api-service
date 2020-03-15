@@ -5,12 +5,15 @@ import com.boyarsky.apiservice.entity.User;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Optional;
 
@@ -30,17 +33,14 @@ public class UserController {
         this.userRolesRepository = userRolesRepository;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public User createUser(@RequestBody User userModel) {
-        return userRepository.save(userModel);
-    }
-
     @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(value = "Retrieve user by email", authorizations = @Authorization(value = "JWT"))
     public User getUserByEmail(@RequestParam String email) {
         return userRepository.getUserByEmail(email);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/role")
+    @ApiOperation(value = "Get user role by uid", authorizations = @Authorization(value = "JWT"))
     public ResponseEntity<Role> getRoleByUid(@RequestParam String uid) {
         Optional<Role> roleByUid = userRolesRepository.getRoleByUid(uid);
         if (roleByUid.isPresent()) {
@@ -52,7 +52,8 @@ public class UserController {
 
 
     @GetMapping("/me")
-    public User getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+    @ApiOperation(value = "Get current user", authorizations = @Authorization(value = "JWT"))
+    public User getCurrentUser(@ApiIgnore @AuthenticationPrincipal UserPrincipal userPrincipal) {
         User userModel = userRepository.getUserById(userPrincipal.getId());
         if (userModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, format("User not found: uid=%s", userPrincipal.getId()));
