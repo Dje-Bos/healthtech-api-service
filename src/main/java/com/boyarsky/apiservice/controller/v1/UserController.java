@@ -5,15 +5,14 @@ import com.boyarsky.apiservice.entity.User;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Optional;
 
@@ -34,13 +33,13 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "Retrieve user by email", authorizations = @Authorization(value = "JWT"))
+    @Operation(description = "Retrieve user by email", security = @SecurityRequirement(name = "JWT"))
     public User getUserByEmail(@RequestParam String email) {
         return userRepository.getUserByEmail(email);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/role")
-    @ApiOperation(value = "Get user role by uid", authorizations = @Authorization(value = "JWT"))
+    @Operation(description = "Get user role by uid", security = @SecurityRequirement(name = "JWT"))
     public ResponseEntity<Role> getRoleByUid(@RequestParam String uid) {
         Optional<Role> roleByUid = userRolesRepository.getRoleByUid(uid);
         if (roleByUid.isPresent()) {
@@ -52,8 +51,8 @@ public class UserController {
 
 
     @GetMapping("/me")
-    @ApiOperation(value = "Get current user", authorizations = @Authorization(value = "JWT"))
-    public User getCurrentUser(@ApiIgnore @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    @Operation(description = "Get current user", security = @SecurityRequirement(name = "JWT"))
+    public User getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         User userModel = userRepository.getUserById(userPrincipal.getId());
         if (userModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, format("User not found: uid=%s", userPrincipal.getId()));

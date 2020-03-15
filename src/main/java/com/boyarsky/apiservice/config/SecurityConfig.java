@@ -5,7 +5,6 @@ import com.boyarsky.apiservice.service.impl.CustomOAuth2UserService;
 import com.boyarsky.apiservice.service.impl.DefaultUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,17 +25,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Import({OAuth2ClientAutoConfiguration.class})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DefaultUserDetailsService customUserDetailsService;
+    private final DefaultUserDetailsService customUserDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
-    @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
-
-    @Autowired
-    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-
-    @Autowired
-    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    public SecurityConfig(DefaultUserDetailsService customUserDetailsService, CustomOAuth2UserService customOAuth2UserService, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler, OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.customOAuth2UserService = customOAuth2UserService;
+        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
+        this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
+    }
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
@@ -81,7 +80,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().sameOrigin().and()
+        http
+                .headers().frameOptions().sameOrigin()
+                .and()
                 .cors()
                 .and()
                 .sessionManagement()
@@ -97,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**", "/oauth2/**","/h2-console/**", "/swagger-ui.html/**", "/api-docs/**", "/swagger-resources/**", "/webjars/**")
+                .antMatchers("/auth/**", "/oauth2/**", "/h2-console/**", "/swagger-ui/**", "/api-docs/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

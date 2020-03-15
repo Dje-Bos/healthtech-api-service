@@ -10,7 +10,7 @@ import com.boyarsky.apiservice.exception.BadRequestException;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.service.UserRolesService;
 import com.boyarsky.apiservice.service.impl.TokenProvider;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @ApiOperation(value = "Authenticate user and issue token")
+    @Operation(description = "Authenticate user and issue token")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDTO) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -70,7 +70,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    @ApiOperation(value = "Sign up new user")
+    @Operation(description = "Sign up new user")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequestDto signUpRequestDTO) {
         if(userRepository.getUserByEmail(signUpRequestDTO.getEmail()) != null) {
             throw new BadRequestException("Email address already in use.");
