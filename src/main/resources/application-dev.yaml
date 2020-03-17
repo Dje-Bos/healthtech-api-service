@@ -29,13 +29,3 @@ app:
     tokenExpirationMsec: 864000000
   oauth2:
     authorizedRedirectUris: https://djebos.z6.web.core.windows.net/logincallback
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
