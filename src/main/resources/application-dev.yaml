@@ -28,7 +28,7 @@ app:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
     tokenExpirationMsec: 864000000
   oauth2:
-    authorizedRedirectUris: https://www.google.com,http://localhost:8080/logincallback
+    authorizedRedirectUris: https://djebos.z6.web.core.windows.net/logincallback
 
 logging:
   level:
