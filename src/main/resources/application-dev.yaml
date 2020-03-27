@@ -21,4 +21,4 @@ app:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
     tokenExpirationMsec: 864000000
   oauth2:
-    authorizedRedirectUris: https://djebos.z6.web.core.windows.net/logincallback
+    authorizedRedirectUris: https://healthtech-pwa-dev.westeurope.azurecontainer.io
