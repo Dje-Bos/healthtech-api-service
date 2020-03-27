@@ -6,9 +6,7 @@ spring:
       hibernate:
         format-sql: true
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: password
+    url: jdbc:sqlserver://healthtech-api.database.windows.net:1433;database=healthtech;user=djebos@healthtech-api;password=4326650Db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
   security:
     oauth2:
       client:
@@ -17,11 +15,6 @@ spring:
             clientId: 898313663527-uhui1u4verpq4joam69ulk4punetm9tb.apps.googleusercontent.com
             clientSecret: 6sIBJ8AshLW4YCwybqDHmSMd
             scope: email,profile
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
 
 app:
   auth:

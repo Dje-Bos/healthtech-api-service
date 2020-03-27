@@ -3,7 +3,6 @@ package com.boyarsky.apiservice.service.impl;
 import com.boyarsky.apiservice.dto.CreateMeasurementRequest;
 import com.boyarsky.apiservice.dto.MeasurementDto;
 import com.boyarsky.apiservice.entity.MeasurementEntry;
-import com.boyarsky.apiservice.entity.MeasurementType;
 import com.boyarsky.apiservice.entity.MeasurementUnit;
 import com.boyarsky.apiservice.repository.MeasurementRepository;
 import com.boyarsky.apiservice.repository.UserRepository;
@@ -32,7 +31,7 @@ public class MeasurementServiceImpl implements MeasurementService {
     @Override
     @Transactional(readOnly = true)
     public List<MeasurementDto> getForUser(Long userId, int page) {
-        List<MeasurementEntry> foundMeasurements = measurementRepository.findByUserId(userId, PageRequest.of(page, 10));
+        List<MeasurementEntry> foundMeasurements = measurementRepository.findByUserIdOrderByCreatedDateDesc(userId, PageRequest.of(page, 30));
         return foundMeasurements.stream()
                 .map(MEASUREMENT_MAPPER::toDto)
                 .collect(Collectors.toList());

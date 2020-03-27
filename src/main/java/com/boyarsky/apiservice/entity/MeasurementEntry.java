@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class MeasurementEntry {
     private MeasurementType measurementType;
 
     @CreatedDate
-    private OffsetDateTime created;
+    private LocalDateTime createdDate;
 
     private String value;
 

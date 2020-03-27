@@ -11,5 +11,5 @@ import java.util.UUID;
 @Repository
 public interface MeasurementRepository extends CrudRepository<MeasurementEntry, UUID> {
 
-    List<MeasurementEntry> findByUserId(Long userId, Pageable pageable);
+    List<MeasurementEntry> findByUserIdOrderByCreatedDateDesc(Long userId, Pageable pageable);
 }
