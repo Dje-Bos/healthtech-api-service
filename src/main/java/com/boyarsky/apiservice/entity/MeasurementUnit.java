@@ -1,23 +1,27 @@
 package com.boyarsky.apiservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum MeasurementUnit {
     KILOGRAM("kg"),
     CELSIUS_DEGREES("°C"),
-    BEATS_PER_MINUTE("bmp"),
+    BEATS_PER_MINUTE("bpm"),
     MERCURY_MM("mmHG"),
     MMOL_PER_LITRE("mmol/L");
 
-    private String measurementUnit;
-    MeasurementUnit(String measurementUnit) {
-        this.measurementUnit = measurementUnit;
+    private String unit;
+
+    MeasurementUnit(String unit) {
+        this.unit = unit;
     }
 
-    public String getMeasurementUnit() {
-        return measurementUnit;
+    @JsonValue
+    public String getUnit() {
+        return unit;
     }
 
     @Override
     public String toString() {
-        return measurementUnit;
+        return unit;
     }
 }

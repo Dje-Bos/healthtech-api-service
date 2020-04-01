@@ -20,13 +20,15 @@ import java.io.IOException;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private TokenProvider tokenProvider;
+    private static final Logger LOG = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
-    @Autowired
+    private TokenProvider tokenProvider;
     private DefaultUserDetailsService customUserDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
+    public TokenAuthenticationFilter(TokenProvider tokenProvider, DefaultUserDetailsService customUserDetailsService) {
+        this.tokenProvider = tokenProvider;
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -43,7 +45,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+            LOG.error("Could not set user authentication in security context", ex);
         }
 
         filterChain.doFilter(request, response);

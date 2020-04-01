@@ -3,7 +3,6 @@ package com.boyarsky.apiservice.service.impl;
 import com.boyarsky.apiservice.entity.User;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class DefaultUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
-    @Autowired
     public DefaultUserDetailsService(UserRepository repository) {
         this.userRepository = repository;
     }

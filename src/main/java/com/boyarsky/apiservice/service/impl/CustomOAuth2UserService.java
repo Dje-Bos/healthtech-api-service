@@ -8,7 +8,6 @@ import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.UserRolesService;
 import com.boyarsky.apiservice.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -26,7 +25,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private UserRepository userRepository;
     private UserRolesService userRolesService;
 
-    @Autowired
     public CustomOAuth2UserService(UserRepository userRepository, UserRolesService userRolesService) {
         this.userRepository = userRepository;
         this.userRolesService = userRolesService;

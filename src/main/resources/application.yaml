@@ -4,6 +4,10 @@ server:
     context-path: /rest
 
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      fail_on_empty_beans: false
   jpa:
     open-in-view: false
     hibernate:

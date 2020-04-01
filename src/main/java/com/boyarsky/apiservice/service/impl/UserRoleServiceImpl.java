@@ -3,7 +3,6 @@ package com.boyarsky.apiservice.service.impl;
 import com.boyarsky.apiservice.entity.Role;
 import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.service.UserRolesService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,7 +11,6 @@ import java.util.Optional;
 public class UserRoleServiceImpl implements UserRolesService {
     private UserRolesRepository userRolesRepository;
 
-    @Autowired
     public UserRoleServiceImpl(UserRolesRepository userRolesRepository) {
         this.userRolesRepository = userRolesRepository;
     }
