@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-ui:1.2.33'
     implementation 'org.springdoc:springdoc-openapi-security:1.2.33'
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

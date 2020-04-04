@@ -13,6 +13,16 @@ spring:
     hibernate:
       ddl-auto: validate
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,metrics,env,logfile,loggers
+
 springdoc:
   api-docs:
     path: /api-docs
+
+logging:
+  file:
+    name: logs/api-service.log
