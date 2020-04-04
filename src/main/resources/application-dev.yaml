@@ -5,6 +5,7 @@ spring:
     properties:
       hibernate:
         format-sql: true
+        generate_statistics: true
   datasource:
     url: jdbc:sqlserver://healthtech-api.database.windows.net:1433;database=healthtech;user=djebos@healthtech-api;password=4326650Db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
     hikari:
