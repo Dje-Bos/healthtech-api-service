@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.service.impl;
 
-import com.boyarsky.apiservice.entity.User;
+import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

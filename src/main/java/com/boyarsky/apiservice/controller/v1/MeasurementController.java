@@ -1,19 +1,20 @@
 package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.controller.v1.dto.MeasurementsByDate;
-import com.boyarsky.apiservice.dto.CreateMeasurementRequest;
-import com.boyarsky.apiservice.dto.MeasurementDto;
+import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.MeasurementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -60,45 +61,5 @@ public class MeasurementController {
         measurementsByDate.setDate(entry.getKey());
         measurementsByDate.setMeasurements(entry.getValue());
         return measurementsByDate;
-    }
-
-    @PostMapping
-    @Operation(description = "Create new measurement", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<?> create(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateMeasurementRequest measurementRequest) {
-        if (!isValidMeasurementValue(measurementRequest)) {
-            return ResponseEntity.badRequest().build();
-
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(measurementService.create(user.getId(), measurementRequest));
-    }
-
-    private boolean isValidMeasurementValue(CreateMeasurementRequest measurementRequest) {
-        boolean isValid;
-        switch (measurementRequest.getType()) {
-            case PULSE: {
-                isValid = measurementRequest.getValue().matches("\\d{2,3}");
-                break;
-            }
-            case PRESSURE: {
-                isValid = measurementRequest.getValue().matches("\\d{2,3}/\\d{2,3}");
-                break;
-            }
-            case WEIGHT: {
-                isValid = measurementRequest.getValue().matches("\\d{2,3}\\.?(?<=\\.)\\d{0,2}");
-                break;
-            }
-            case GLUCOSE: {
-                isValid = measurementRequest.getValue().matches("\\d{1,3}\\.\\d{0,2}");
-                break;
-            }
-            case TEMPERATURE: {
-                isValid = measurementRequest.getValue().matches("\\d{1,3}\\.\\d?");
-                break;
-            }
-            default: {
-                isValid = false;
-            }
-        }
-        return isValid;
     }
 }

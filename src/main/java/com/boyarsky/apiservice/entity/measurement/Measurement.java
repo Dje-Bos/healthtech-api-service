@@ -1,33 +1,30 @@
-package com.boyarsky.apiservice.entity;
+package com.boyarsky.apiservice.entity.measurement;
 
+import com.boyarsky.apiservice.entity.user.User;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@Entity
+@ToString
+@Inheritance(strategy = InheritanceType.JOINED)
 @EntityListeners(AuditingEntityListener.class)
-public class MeasurementEntry {
+@Table(name = "measurements")
+public abstract class Measurement {
     @Id
     @GeneratedValue
     private UUID uid;
 
-    @Enumerated(EnumType.STRING)
-    private MeasurementType measurementType;
-
     @CreatedDate
-    private LocalDateTime createdDate;
-
-    private String value;
+    private LocalDateTime createdTime;
 
     @Enumerated(EnumType.STRING)
     private MeasurementUnit unit;
@@ -36,4 +33,6 @@ public class MeasurementEntry {
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_id_fk"))
     private User user;
 
+    @Version
+    private Integer version;
 }

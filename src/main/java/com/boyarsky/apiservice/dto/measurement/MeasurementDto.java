@@ -1,7 +1,7 @@
-package com.boyarsky.apiservice.dto;
+package com.boyarsky.apiservice.dto.measurement;
 
-import com.boyarsky.apiservice.entity.MeasurementType;
-import com.boyarsky.apiservice.entity.MeasurementUnit;
+import com.boyarsky.apiservice.entity.measurement.MeasurementType;
+import com.boyarsky.apiservice.entity.measurement.MeasurementUnit;
 import lombok.Data;
 
 import java.time.LocalDateTime;

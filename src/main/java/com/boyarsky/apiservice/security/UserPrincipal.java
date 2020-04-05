@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.security;
 
-import com.boyarsky.apiservice.entity.User;
+import com.boyarsky.apiservice.entity.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

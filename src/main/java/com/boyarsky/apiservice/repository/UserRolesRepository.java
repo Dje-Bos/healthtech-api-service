@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.repository;
 
-import com.boyarsky.apiservice.entity.Role;
+import com.boyarsky.apiservice.entity.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

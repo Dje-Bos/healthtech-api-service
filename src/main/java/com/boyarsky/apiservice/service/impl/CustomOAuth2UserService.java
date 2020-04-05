@@ -1,8 +1,8 @@
 package com.boyarsky.apiservice.service.impl;
 
 import com.boyarsky.apiservice.dto.OAuth2UserInfoDto;
-import com.boyarsky.apiservice.entity.AuthType;
-import com.boyarsky.apiservice.entity.User;
+import com.boyarsky.apiservice.entity.user.AuthType;
+import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.exception.OAuth2AuthenticationProcessingException;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;

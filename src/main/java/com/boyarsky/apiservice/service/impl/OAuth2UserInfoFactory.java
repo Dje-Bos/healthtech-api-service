@@ -2,7 +2,7 @@ package com.boyarsky.apiservice.service.impl;
 
 import com.boyarsky.apiservice.dto.GoogleOAuth2UserInfoDto;
 import com.boyarsky.apiservice.dto.OAuth2UserInfoDto;
-import com.boyarsky.apiservice.entity.AuthType;
+import com.boyarsky.apiservice.entity.user.AuthType;
 import com.boyarsky.apiservice.exception.OAuth2AuthenticationProcessingException;
 
 import java.util.Map;

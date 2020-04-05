@@ -1,7 +1,8 @@
 package com.boyarsky.apiservice.controller.v1;
 
-import com.boyarsky.apiservice.entity.Role;
-import com.boyarsky.apiservice.entity.User;
+import com.boyarsky.apiservice.dto.UserDto;
+import com.boyarsky.apiservice.entity.user.Role;
+import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 import static com.boyarsky.apiservice.controller.ApiConstants.API_VERSION_1;
+import static com.boyarsky.apiservice.mapper.UserMapper.USER_MAPPER;
 import static java.lang.String.format;
 
 @RestController
@@ -42,21 +44,16 @@ public class UserController {
     @Operation(description = "Get user role by uid", security = @SecurityRequirement(name = "JWT"))
     public ResponseEntity<Role> getRoleByUid(@RequestParam String uid) {
         Optional<Role> roleByUid = userRolesRepository.getRoleByUid(uid);
-        if (roleByUid.isPresent()) {
-            return ResponseEntity.ok(roleByUid.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return roleByUid.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
-
 
     @GetMapping("/me")
     @Operation(description = "Get current user", security = @SecurityRequirement(name = "JWT"))
-    public User getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        User userModel = userRepository.getUserById(userPrincipal.getId());
-        if (userModel == null) {
+    public UserDto getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        User user = userRepository.getUserById(userPrincipal.getId());
+        if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, format("User not found: uid=%s", userPrincipal.getId()));
         }
-        return userModel;
+        return USER_MAPPER.toDto(user);
     }
 }

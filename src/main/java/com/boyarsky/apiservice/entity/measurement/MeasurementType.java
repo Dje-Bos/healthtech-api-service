@@ -1,4 +1,4 @@
-package com.boyarsky.apiservice.entity;
+package com.boyarsky.apiservice.entity.measurement;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

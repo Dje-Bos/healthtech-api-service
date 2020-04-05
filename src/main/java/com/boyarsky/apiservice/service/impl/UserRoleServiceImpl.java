@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.service.impl;
 
-import com.boyarsky.apiservice.entity.Role;
+import com.boyarsky.apiservice.entity.user.Role;
 import com.boyarsky.apiservice.repository.UserRolesRepository;
 import com.boyarsky.apiservice.service.UserRolesService;
 import org.springframework.stereotype.Service;

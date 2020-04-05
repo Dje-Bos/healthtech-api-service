@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.controller.v1.dto;
 
-import com.boyarsky.apiservice.dto.MeasurementDto;
+import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import lombok.Data;
 
 import java.time.LocalDate;

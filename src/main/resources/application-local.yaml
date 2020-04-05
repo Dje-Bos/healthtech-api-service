@@ -4,6 +4,15 @@ spring:
       hibernate:
         format_sql: true
         generate_statistics: true
+      javax:
+        persistence:
+          schema-generation:
+            create-source: metadata
+            scripts:
+              action: create
+              create-target: src/main/resources/migration_script.sql
+    hibernate:
+      ddl-auto: validate
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres

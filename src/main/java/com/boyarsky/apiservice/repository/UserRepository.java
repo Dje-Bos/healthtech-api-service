@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.repository;
 
-import com.boyarsky.apiservice.entity.User;
+import com.boyarsky.apiservice.entity.user.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
