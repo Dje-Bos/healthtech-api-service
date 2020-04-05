@@ -19,7 +19,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: info,health,metrics,env,logfile,loggers
+        include: info,health,metrics,env,logfile,loggers,flyway
 
 springdoc:
   api-docs:
