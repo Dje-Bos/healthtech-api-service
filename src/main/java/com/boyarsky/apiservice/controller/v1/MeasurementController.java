@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import static com.boyarsky.apiservice.controller.ApiConstants.API_VERSION_1;
 
 @RestController
-@RequestMapping(API_VERSION_1 + "/measurement-entries")
+@RequestMapping(API_VERSION_1 + "/measurements")
 public class MeasurementController {
 
     private MeasurementService measurementService;

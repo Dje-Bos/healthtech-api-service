@@ -6,7 +6,7 @@ import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.exception.OAuth2AuthenticationProcessingException;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
-import com.boyarsky.apiservice.service.UserRolesService;
+import com.boyarsky.apiservice.service.RoleService;
 import com.boyarsky.apiservice.util.StringUtil;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -23,11 +23,11 @@ import java.util.Set;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private UserRepository userRepository;
-    private UserRolesService userRolesService;
+    private RoleService roleService;
 
-    public CustomOAuth2UserService(UserRepository userRepository, UserRolesService userRolesService) {
+    public CustomOAuth2UserService(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
-        this.userRolesService = userRolesService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setEmail(oAuth2UserInfoDTO.getEmail());
         user.setPictureUrl(oAuth2UserInfoDTO.getImageUrl());
 
-        user.setRoles(Set.of(userRolesService.createOrGetByUid("USER")));
+        user.setRoles(Set.of(roleService.createOrGetByUid("USER")));
         user.setPictureUrl(oAuth2UserInfoDTO.getImageUrl());
         return userRepository.save(user);
     }

@@ -1,9 +1,11 @@
 package com.boyarsky.apiservice.dto;
 
+import lombok.Data;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-
+@Data
 public class LoginRequestDto {
     @NotBlank
     @Email
@@ -11,28 +13,4 @@ public class LoginRequestDto {
 
     @NotBlank
     private String password;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public LoginRequestDto() {
-    }
-
-    public LoginRequestDto(@NotBlank @Email String email, @NotBlank String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
