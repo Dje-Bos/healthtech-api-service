@@ -14,10 +14,16 @@ public interface UserMapper {
 
     UserDto toDto(User user);
 
-//    @Mappings({
-//            @Mapping(target = "name"),
-//            @Mapping(target = "email"),
-//            @Mapping(target = "password")
-//    })
+    @Mappings({
+            @Mapping(target = "name"),
+            @Mapping(target = "email"),
+            @Mapping(target = "password"),
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "auth", ignore = true),
+            @Mapping(target = "creationTime", ignore = true),
+            @Mapping(target = "isActive", ignore = true),
+            @Mapping(target = "pictureUrl", ignore = true),
+            @Mapping(target = "roles", ignore = true),
+    })
     User fromSignUpRequest(SignUpRequestDto signUpRequest);
 }
