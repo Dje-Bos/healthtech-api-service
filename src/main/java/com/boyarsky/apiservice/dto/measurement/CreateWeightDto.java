@@ -11,5 +11,5 @@ public class CreateWeightDto extends CreateMeasurementDto {
     @NotNull
     @Min(10)
     @Max(999)
-    private Integer weight;
+    private Float weight;
 }

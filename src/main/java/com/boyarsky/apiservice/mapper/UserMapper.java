@@ -23,7 +23,7 @@ public interface UserMapper {
             @Mapping(target = "creationTime", ignore = true),
             @Mapping(target = "isActive", ignore = true),
             @Mapping(target = "pictureUrl", ignore = true),
-            @Mapping(target = "roles", ignore = true),
+            @Mapping(target = "roles", ignore = true)
     })
     User fromSignUpRequest(SignUpRequestDto signUpRequest);
 }
