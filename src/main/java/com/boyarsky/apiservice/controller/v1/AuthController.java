@@ -1,7 +1,7 @@
 package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.AuthResponseDto;
-import com.boyarsky.apiservice.dto.ErrorResponseDto;
+import com.boyarsky.apiservice.dto.ApiErrorDto;
 import com.boyarsky.apiservice.dto.LoginRequestDto;
 import com.boyarsky.apiservice.dto.SignUpRequestDto;
 import com.boyarsky.apiservice.dto.UserDto;
@@ -84,8 +84,8 @@ public class AuthController {
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponseDto> handle(UserAlreadyExistsException e) {
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+    public ResponseEntity<ApiErrorDto> handle(UserAlreadyExistsException e) {
+        ApiErrorDto errorResponseDto = new ApiErrorDto();
         errorResponseDto.setErr(e.getMessage());
         return ResponseEntity.badRequest().body(errorResponseDto);
     }

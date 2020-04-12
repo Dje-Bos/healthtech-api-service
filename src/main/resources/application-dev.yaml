@@ -15,7 +15,7 @@ spring:
           google:
             clientId: 898313663527-uhui1u4verpq4joam69ulk4punetm9tb.apps.googleusercontent.com
             clientSecret: 6sIBJ8AshLW4YCwybqDHmSMd
-            scope: email,profile
+            scope: email,profile,https://www.googleapis.com/auth/calendar
 
 app:
   auth:
