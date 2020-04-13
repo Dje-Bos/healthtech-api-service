@@ -9,7 +9,7 @@ spring:
           schema-generation:
             create-source: metadata
             scripts:
-              action: create
+              action: update
               create-target: src/main/resources/migration_script.sql
     hibernate:
       ddl-auto: validate

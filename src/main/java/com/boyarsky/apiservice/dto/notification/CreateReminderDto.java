@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
-public class CreateNotificationDto {
+public class CreateReminderDto {
     @NotNull
     private String title;
     private String colorId;

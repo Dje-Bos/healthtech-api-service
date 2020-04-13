@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.mapper;
 
-import com.boyarsky.apiservice.dto.notification.CreateNotificationDto;
+import com.boyarsky.apiservice.dto.notification.CreateReminderDto;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
@@ -23,13 +23,14 @@ public interface NotificationMapper {
             @Mapping(target = "colorId"),
             @Mapping(target = "description"),
             @Mapping(target = "recurrence"),
-            @Mapping(source = "startTime", target = "start")
+            @Mapping(source = "startTime", target = "start"),
+            @Mapping(source = "startTime", target = "end")
     })
-    Event toEvent(CreateNotificationDto notification);
+    Event toEvent(CreateReminderDto notification);
 
     static EventDateTime fromZonedDateTime(ZonedDateTime dateTime) {
         EventDateTime eventDateTime = new EventDateTime();
-        eventDateTime.setDate(new DateTime(dateTime.toInstant().toEpochMilli(), dateTime.getOffset().get(OFFSET_SECONDS) / 60));
+        eventDateTime.setDateTime(new DateTime(dateTime.toInstant().toEpochMilli(), dateTime.getOffset().get(OFFSET_SECONDS) / 60));
         return eventDateTime;
     }
 }
