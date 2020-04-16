@@ -53,7 +53,7 @@ public class ReminderController {
 
     @PostMapping
     public ResponseEntity<Event> create(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateReminderDto newReminder) {
-        if (!newReminder.getRecurrence().isEmpty()) {
+        if (newReminder.getRecurrence() != null) {
             validateRecurrence(newReminder.getRecurrence());
             String rfc5545Recurrence = convertRecurrenceToRfc5545(newReminder.getRecurrence());
             newReminder.setRecurrence(Collections.singletonList(rfc5545Recurrence));
