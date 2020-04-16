@@ -15,8 +15,8 @@ import java.time.ZonedDateTime;
 import static java.time.temporal.ChronoField.OFFSET_SECONDS;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface NotificationMapper {
-    NotificationMapper NOTIFICATION_MAPPER = Mappers.getMapper(NotificationMapper.class);
+public interface ReminderMapper {
+    ReminderMapper NOTIFICATION_MAPPER = Mappers.getMapper(ReminderMapper.class);
 
     @Mappings({
             @Mapping(source = "title", target = "summary"),
@@ -31,6 +31,7 @@ public interface NotificationMapper {
     static EventDateTime fromZonedDateTime(ZonedDateTime dateTime) {
         EventDateTime eventDateTime = new EventDateTime();
         eventDateTime.setDateTime(new DateTime(dateTime.toInstant().toEpochMilli(), dateTime.getOffset().get(OFFSET_SECONDS) / 60));
+        eventDateTime.setTimeZone(dateTime.getZone().toString());
         return eventDateTime;
     }
 }

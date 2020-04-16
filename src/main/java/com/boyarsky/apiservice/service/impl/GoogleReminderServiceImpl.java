@@ -12,6 +12,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventReminder;
 import lombok.SneakyThrows;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -24,7 +25,7 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static com.boyarsky.apiservice.mapper.NotificationMapper.NOTIFICATION_MAPPER;
+import static com.boyarsky.apiservice.mapper.ReminderMapper.NOTIFICATION_MAPPER;
 import static com.google.api.client.googleapis.javanet.GoogleNetHttpTransport.newTrustedTransport;
 import static java.lang.String.format;
 import static java.time.temporal.ChronoField.OFFSET_SECONDS;
@@ -48,8 +49,19 @@ public class GoogleReminderServiceImpl implements GoogleReminderService {
         Calendar calendarApiClient = getCalendarApiClient(oAuth2AuthorizedClient);
 
         Event newEvent = NOTIFICATION_MAPPER.toEvent(newReminder);
+        addBeforeEventReminder(newEvent);
         createRemindersCalendarIfNotExists(user, calendarApiClient);
         return calendarApiClient.events().insert(user.getCalendarId(), newEvent).execute();
+    }
+
+    private void addBeforeEventReminder(Event event) {
+        EventReminder beforeEventReminder = new EventReminder();
+        beforeEventReminder.setMinutes(0);
+        beforeEventReminder.setMethod("popup");
+        Event.Reminders reminders = new Event.Reminders();
+        reminders.setUseDefault(false);
+        reminders.setOverrides(Collections.singletonList(beforeEventReminder));
+        event.setReminders(reminders);
     }
 
     private User findUser(Long userId) {
