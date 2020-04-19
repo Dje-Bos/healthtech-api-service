@@ -10,5 +10,6 @@ public class UserDto {
     private Long id;
     private String email;
     private String pictureUrl;
+    private String authType;
     private List<RoleDto> roles;
 }

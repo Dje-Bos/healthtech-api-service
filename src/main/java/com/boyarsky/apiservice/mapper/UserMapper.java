@@ -12,6 +12,14 @@ import org.mapstruct.factory.Mappers;
 public interface UserMapper {
     UserMapper USER_MAPPER = Mappers.getMapper(UserMapper.class);
 
+    @Mappings({
+            @Mapping(source = "auth", target = "authType"),
+            @Mapping(target = "id"),
+            @Mapping(target = "name"),
+            @Mapping(target = "pictureUrl"),
+            @Mapping(target = "email"),
+            @Mapping(target = "roles"),
+    })
     UserDto toDto(User user);
 
     @Mappings({
@@ -23,7 +31,8 @@ public interface UserMapper {
             @Mapping(target = "creationTime", ignore = true),
             @Mapping(target = "isActive", ignore = true),
             @Mapping(target = "pictureUrl", ignore = true),
-            @Mapping(target = "roles", ignore = true)
+            @Mapping(target = "roles", ignore = true),
+            @Mapping(target = "calendarId", ignore = true),
     })
     User fromSignUpRequest(SignUpRequestDto signUpRequest);
 }
