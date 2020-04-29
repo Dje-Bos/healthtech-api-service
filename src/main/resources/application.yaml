@@ -4,6 +4,8 @@ server:
     context-path: /rest
 
 spring:
+  application:
+    name: HealthTech API Service
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     serialization:
