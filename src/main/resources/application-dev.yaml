@@ -3,6 +3,8 @@ spring:
     admin:
       client:
         url: https://healthtech-admin.azurewebsites.net
+        instance:
+          service-base-url: https://healthtech.azurewebsites.net
   jpa:
     properties:
       hibernate:
