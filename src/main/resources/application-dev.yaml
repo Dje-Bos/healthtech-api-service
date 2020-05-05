@@ -29,3 +29,4 @@ app:
     tokenExpirationMsec: 864000000
   oauth2:
     authorizedRedirectUris: https://healthtech-pwa-dev.westeurope.azurecontainer.io
+  recommendation-service-url: https://protocol-validator.azurewebsites.net/rest

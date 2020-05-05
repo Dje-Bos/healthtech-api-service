@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.service;
 
-import com.boyarsky.apiservice.dto.notification.CreateReminderDto;
+import com.boyarsky.apiservice.dto.reminder.CreateReminderDto;
 import com.google.api.services.calendar.model.Event;
 
 import java.time.ZonedDateTime;

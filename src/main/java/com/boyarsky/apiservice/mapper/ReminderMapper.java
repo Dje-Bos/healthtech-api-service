@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.mapper;
 
-import com.boyarsky.apiservice.dto.notification.CreateReminderDto;
+import com.boyarsky.apiservice.dto.reminder.CreateReminderDto;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;

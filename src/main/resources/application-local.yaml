@@ -36,6 +36,7 @@ app:
     tokenExpirationMsec: 864000000
   oauth2:
     authorizedRedirectUris: http://localhost:8080/logincallback
+  recommendation-service-url: http://localhost:8082/rest
 
 logging:
   level:

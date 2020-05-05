@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -37,5 +38,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
             var defaultLocalDateTimeSerializer = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(defaultDateTimeFormat));
             jacksonBuilder.serializers(defaultLocalDateTimeSerializer);
         };
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

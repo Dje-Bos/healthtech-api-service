@@ -1,6 +1,6 @@
 package com.boyarsky.apiservice.service.impl;
 
-import com.boyarsky.apiservice.dto.notification.CreateReminderDto;
+import com.boyarsky.apiservice.dto.reminder.CreateReminderDto;
 import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.service.GoogleReminderService;

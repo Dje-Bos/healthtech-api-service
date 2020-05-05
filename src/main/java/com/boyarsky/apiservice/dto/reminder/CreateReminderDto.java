@@ -1,4 +1,4 @@
-package com.boyarsky.apiservice.dto.notification;
+package com.boyarsky.apiservice.dto.reminder;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.ApiErrorDto;
-import com.boyarsky.apiservice.dto.notification.CreateReminderDto;
+import com.boyarsky.apiservice.dto.reminder.CreateReminderDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.GoogleReminderService;
 import com.boyarsky.apiservice.service.impl.exception.AuthorizedClientNotFoundException;
@@ -9,6 +9,8 @@ import com.boyarsky.apiservice.service.impl.exception.CalendarNotExistException;
 import com.boyarsky.apiservice.service.impl.exception.UserNotFoundException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.calendar.model.Event;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,20 +40,23 @@ public class ReminderController {
     public static final String EVENT_ID = "eventId";
     public static final String DAILY_RECURRENCE_ID = "daily";
     public static final String WEEKLY_RECURRENCE_ID = "weekly";
-    private GoogleReminderService reminderService;
+
+    private final GoogleReminderService reminderService;
 
     public ReminderController(GoogleReminderService reminderService) {
         this.reminderService = reminderService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Event>> getAllNotifications(@AuthenticationPrincipal UserPrincipal user,
-                                                           @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDateTime,
-                                                           @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endDateTime) {
+    @Operation(description = "Get all reminders for user in range between startDate and endDate", security = @SecurityRequirement(name = "JWT"))
+    public ResponseEntity<List<Event>> getAllReminders(@AuthenticationPrincipal UserPrincipal user,
+                                                       @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDateTime,
+                                                       @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endDateTime) {
         return ResponseEntity.ok().body(reminderService.getAllWithinTimeSlot(user.getId(), startDateTime, endDateTime));
     }
 
     @PostMapping
+    @Operation(description = "Create new reminder for user", security = @SecurityRequirement(name = "JWT"))
     public ResponseEntity<Event> create(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateReminderDto newReminder) {
         if (newReminder.getRecurrence() != null) {
             validateRecurrence(newReminder.getRecurrence());
