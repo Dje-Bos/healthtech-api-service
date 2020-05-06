@@ -4,16 +4,21 @@ import com.boyarsky.apiservice.dto.RoleDto;
 import com.boyarsky.apiservice.dto.UserDto;
 import com.boyarsky.apiservice.entity.user.Role;
 import com.boyarsky.apiservice.entity.user.User;
-import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.repository.RoleRepository;
+import com.boyarsky.apiservice.repository.UserRepository;
 import com.boyarsky.apiservice.security.UserPrincipal;
+import com.boyarsky.apiservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -27,13 +32,14 @@ import static java.lang.String.format;
 @RequestMapping(API_VERSION_1 + "/user")
 public class UserController {
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserService userService;
 
-    @Autowired
-    public UserController(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserController(UserRepository userRepository, RoleRepository roleRepository, UserService userService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userService = userService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -60,5 +66,12 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, format("User not found: uid=%s", userPrincipal.getId()));
         }
         return USER_MAPPER.toDto(user);
+    }
+
+    @DeleteMapping
+    @Operation(description = "Remove current user and its associated data", security = @SecurityRequirement(name = "JWT"))
+    public ResponseEntity<?> removeUserAccount(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.removeUserAccount(userPrincipal.getId());
+        return ResponseEntity.ok().build();
     }
 }

@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.service.impl;
 
 import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.entity.measurement.Measurement;
+import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.repository.MeasurementRepository;
 import com.boyarsky.apiservice.service.MeasurementService;
 import com.boyarsky.apiservice.util.MeasurementUtil;
@@ -30,6 +31,11 @@ public class MeasurementServiceImpl implements MeasurementService {
         return foundMeasurements.stream()
                 .map(MeasurementUtil::toDto)
                 .collect(Collectors.groupingBy(measurementDto -> measurementDto.getCreated().toLocalDate(), LinkedHashMap::new, Collectors.toList()));
+    }
+
+    @Override
+    public void removeAllByUser(User user) {
+        measurementRepository.removeAllByUser(user);
     }
 
 }

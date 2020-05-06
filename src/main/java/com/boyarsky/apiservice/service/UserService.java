@@ -5,4 +5,6 @@ import com.boyarsky.apiservice.dto.UserDto;
 
 public interface UserService {
     UserDto register(SignUpRequestDto signUpRequestDto);
+
+    void removeUserAccount(Long userId);
 }

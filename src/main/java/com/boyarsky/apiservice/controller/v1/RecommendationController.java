@@ -1,6 +1,7 @@
 package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.ApiErrorDto;
+import com.boyarsky.apiservice.dto.RecommendationDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.RecommendationService;
 import com.boyarsky.apiservice.service.impl.exception.RecommendationServiceException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static com.boyarsky.apiservice.controller.ApiConstants.API_VERSION_1;
 
@@ -31,10 +33,10 @@ public class RecommendationController {
 
     @GetMapping
     @Operation(description = "Get all recommendations for user using measurements in range between startDate and endDate", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<?> getAllRecommendationsForPeriod(@AuthenticationPrincipal UserPrincipal user,
-                                                            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDateTime,
-                                                            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endDateTime) {
-        return ResponseEntity.ok(recommendationService.findRecommendationsForUser(user.getId(), startDateTime, endDateTime));
+    public List<RecommendationDto> getAllRecommendationsForPeriod(@AuthenticationPrincipal UserPrincipal user,
+                                                                  @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDateTime,
+                                                                  @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endDateTime) {
+        return recommendationService.findRecommendationsForUser(user.getId(), startDateTime, endDateTime);
     }
 
     @ExceptionHandler(RecommendationServiceException.class)
