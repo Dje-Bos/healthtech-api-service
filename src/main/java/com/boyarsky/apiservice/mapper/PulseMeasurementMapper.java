@@ -18,6 +18,11 @@ public interface PulseMeasurementMapper {
     MeasurementDto toDto(PulseMeasurement entity);
 
     @Mappings({
+            @Mapping(source = "value", target = "pulse")
+    })
+    PulseMeasurement toEntity(MeasurementDto dto);
+
+    @Mappings({
             @Mapping(target = "pulse"),
             @Mapping(target = "uid", ignore = true),
             @Mapping(target = "createdTime", ignore = true),

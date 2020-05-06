@@ -3,6 +3,7 @@ package com.boyarsky.apiservice.mapper;
 import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.dto.measurement.CreateGlucoseDto;
 import com.boyarsky.apiservice.entity.measurement.GlucoseMeasurement;
+import com.boyarsky.apiservice.entity.measurement.PulseMeasurement;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -17,6 +18,11 @@ public interface GlucoseMeasurementMapper {
             @Mapping(target = "type", expression = "java(com.boyarsky.apiservice.entity.measurement.MeasurementType.GLUCOSE)")
     })
     MeasurementDto toDto(GlucoseMeasurement entity);
+
+    @Mappings({
+            @Mapping(source = "value", target = "glucose")
+    })
+    GlucoseMeasurement toEntity(MeasurementDto dto);
 
     @Mappings({
             @Mapping(target = "glucose"),

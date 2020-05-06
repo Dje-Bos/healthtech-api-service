@@ -18,6 +18,14 @@ public interface MeasurementConfig {
     MeasurementDto toDto(Measurement entity);
 
     @Mappings({
+            @Mapping(source = "created", target = "createdTime"),
+            @Mapping(target = "unit"),
+            @Mapping(target = "user", ignore = true),
+            @Mapping(target = "version", ignore = true)
+    })
+    Measurement toEntity(MeasurementDto dto);
+
+    @Mappings({
                     @Mapping(target = "unit")
             })
     Measurement create(CreateMeasurementDto entity);

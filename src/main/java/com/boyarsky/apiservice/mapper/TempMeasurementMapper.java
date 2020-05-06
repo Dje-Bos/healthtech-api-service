@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.mapper;
 
 import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.dto.measurement.CreateTempDto;
+import com.boyarsky.apiservice.entity.measurement.PulseMeasurement;
 import com.boyarsky.apiservice.entity.measurement.TempMeasurement;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,6 +18,11 @@ public interface TempMeasurementMapper {
             @Mapping(target = "type", expression = "java(com.boyarsky.apiservice.entity.measurement.MeasurementType.TEMPERATURE)")
     })
     MeasurementDto toDto(TempMeasurement entity);
+
+    @Mappings({
+            @Mapping(source = "value", target = "temp")
+    })
+    TempMeasurement toEntity(MeasurementDto dto);
 
     @Mappings({
             @Mapping(target = "temp"),

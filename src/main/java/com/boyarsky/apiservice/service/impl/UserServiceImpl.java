@@ -21,9 +21,9 @@ import static java.lang.String.format;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private RoleService roleService;
-    private MeasurementService measurementService;
+    private final UserRepository userRepository;
+    private final RoleService roleService;
+    private final MeasurementService measurementService;
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, MeasurementService measurementService) {
         this.userRepository = userRepository;
@@ -55,5 +55,10 @@ public class UserServiceImpl implements UserService {
         }
         measurementService.removeAllByUser(user);
         userRepository.delete(user);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.getUserById(userId);
     }
 }

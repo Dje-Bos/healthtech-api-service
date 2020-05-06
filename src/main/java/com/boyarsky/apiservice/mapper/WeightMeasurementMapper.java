@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.mapper;
 
 import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.dto.measurement.CreateWeightDto;
+import com.boyarsky.apiservice.entity.measurement.PulseMeasurement;
 import com.boyarsky.apiservice.entity.measurement.WeightMeasurement;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,6 +18,11 @@ public interface WeightMeasurementMapper {
             @Mapping(target = "type", expression = "java(com.boyarsky.apiservice.entity.measurement.MeasurementType.WEIGHT)")
     })
     MeasurementDto toDto(WeightMeasurement entity);
+
+    @Mappings({
+            @Mapping(source = "value", target = "weight")
+    })
+    WeightMeasurement toEntity(MeasurementDto dto);
 
     @Mappings({
             @Mapping(target = "weight"),

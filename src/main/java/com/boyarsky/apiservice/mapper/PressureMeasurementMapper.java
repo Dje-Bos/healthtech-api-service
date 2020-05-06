@@ -19,6 +19,12 @@ public interface PressureMeasurementMapper {
     MeasurementDto toDto(PressureMeasurement entity);
 
     @Mappings({
+            @Mapping(target = "systolic", expression = "java(Integer.valueOf(dto.getValue().substring(0, dto.getValue().indexOf(\"/\"))))"),
+            @Mapping(target = "diastolic", expression = "java(Integer.valueOf(dto.getValue().substring(dto.getValue().indexOf(\"/\")) + 1))")
+    })
+    PressureMeasurement toEntity(MeasurementDto dto);
+
+    @Mappings({
             @Mapping(target = "systolic"),
             @Mapping(target = "diastolic"),
             @Mapping(target = "uid", ignore = true),

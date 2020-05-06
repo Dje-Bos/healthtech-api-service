@@ -19,4 +19,6 @@ public interface MeasurementRepository extends JpaRepository<Measurement, UUID> 
     List<Measurement> findByUserIdAndCreatedTimeIsBetween(Long userId, LocalDateTime start, LocalDateTime end);
 
     void removeAllByUser(User user);
+
+    List<Measurement> findAllByUser(User user);
 }

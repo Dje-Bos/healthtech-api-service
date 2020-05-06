@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class MeasurementServiceImpl implements MeasurementService {
-    private MeasurementRepository measurementRepository;
+    private final MeasurementRepository measurementRepository;
+
 
     public MeasurementServiceImpl(MeasurementRepository measurementRepository) {
         this.measurementRepository = measurementRepository;
