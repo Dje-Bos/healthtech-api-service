@@ -16,7 +16,7 @@ public interface MeasurementRepository extends JpaRepository<Measurement, UUID> 
 
     List<Measurement> findByUserIdOrderByCreatedTimeDesc(Long userId, Pageable pageable);
 
-    List<Measurement> findByUserIdAndCreatedTimeIsBetween(Long userId, LocalDateTime start, LocalDateTime end);
+    List<Measurement> findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeDesc(Long userId, LocalDateTime start, LocalDateTime end);
 
     void removeAllByUser(User user);
 

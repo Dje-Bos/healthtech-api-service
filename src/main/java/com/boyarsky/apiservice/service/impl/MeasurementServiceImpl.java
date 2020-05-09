@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,13 @@ public class MeasurementServiceImpl implements MeasurementService {
         return foundMeasurements.stream()
                 .map(MeasurementUtil::toDto)
                 .collect(Collectors.groupingBy(measurementDto -> measurementDto.getCreated().toLocalDate(), LinkedHashMap::new, Collectors.toList()));
+    }
+
+    @Override
+    public List<MeasurementDto> getInTimeRange(Long userId, LocalDateTime start, LocalDateTime end) {
+        return measurementRepository.findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeDesc(userId, start, end).stream()
+                .map(MeasurementUtil::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

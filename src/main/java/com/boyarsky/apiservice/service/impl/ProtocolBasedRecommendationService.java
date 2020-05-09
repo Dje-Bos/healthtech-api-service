@@ -7,6 +7,7 @@ import com.boyarsky.apiservice.entity.measurement.Measurement;
 import com.boyarsky.apiservice.repository.MeasurementRepository;
 import com.boyarsky.apiservice.service.RecommendationService;
 import com.boyarsky.apiservice.service.impl.exception.RecommendationServiceException;
+import com.boyarsky.apiservice.util.MeasurementUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,8 +34,8 @@ public class ProtocolBasedRecommendationService implements RecommendationService
 
     @Override
     public List<RecommendationDto> findRecommendationsForUser(Long userId, ZonedDateTime startDateTime, ZonedDateTime endDateTime) {
-        List<Measurement> userMeasurements = repository.findByUserIdAndCreatedTimeIsBetween(userId, startDateTime.toLocalDateTime(), endDateTime.toLocalDateTime());
-        ResponseEntity<ProtocolValidationResult[]> protocolValidationResponse = restTemplate.postForEntity(recommendationServiceUrl, userMeasurements, ProtocolValidationResult[].class);
+        List<Measurement> userMeasurements = repository.findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeDesc(userId, startDateTime.toLocalDateTime(), endDateTime.toLocalDateTime());
+        ResponseEntity<ProtocolValidationResult[]> protocolValidationResponse = restTemplate.postForEntity(recommendationServiceUrl + "/v1/protocols", userMeasurements.stream().map(MeasurementUtil::toDto).collect(Collectors.toList()), ProtocolValidationResult[].class);
         if (protocolValidationResponse.getStatusCode().is2xxSuccessful()) {
             return Arrays.stream(protocolValidationResponse.getBody())
                     .map(RECOMMENDATION_MAPPER::fromProtocolValidationResult)
