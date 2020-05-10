@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.controller.v1.dto.MeasurementsByDate;
 import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
+import com.boyarsky.apiservice.entity.measurement.MeasurementType;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.MeasurementService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,10 +42,10 @@ public class MeasurementController {
         return ResponseEntity.ok(uid);
     }
 
-    @GetMapping(params = {"page"})
-    @Operation(description = "Get measurements grouped by date", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<List<MeasurementsByDate>> get(@AuthenticationPrincipal UserPrincipal user, @RequestParam("page") Integer page) {
-        var foundMeasurements = measurementService.getGroupedByDate(user.getId(), page);
+    @GetMapping(params = {"page", "types"})
+    @Operation(description = "Get measurements grouped by date of selected type", security = @SecurityRequirement(name = "JWT"))
+    public ResponseEntity<List<MeasurementsByDate>> get(@AuthenticationPrincipal UserPrincipal user, @RequestParam("page") Integer page, @RequestParam("types") MeasurementType[] types) {
+        var foundMeasurements = measurementService.getGroupedByDateOfType(user.getId(), types, page);
         if (foundMeasurements.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

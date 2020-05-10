@@ -1,6 +1,7 @@
 package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.measurement.CreatePressureDto;
+import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.PressureService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +29,7 @@ public class PressureController {
 
     @PostMapping
     @Operation(description = "Create new pressure measurement", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<?> createPressure(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreatePressureDto createPressureDto) {
+    public ResponseEntity<MeasurementDto> createPressure(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreatePressureDto createPressureDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(pressureService.createForUser(createPressureDto, user.getId()));
     }
 }

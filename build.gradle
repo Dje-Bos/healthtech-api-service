@@ -29,7 +29,7 @@ lombok {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.springdoc:springdoc-openapi-ui:1.2.33'
@@ -42,6 +42,10 @@ dependencies {
     implementation "de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:5.3.7.Final'
+    annotationProcessor("javax.xml.bind:jaxb-api") {
+        transitive = true
+    }
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc:8.2.1.jre11'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

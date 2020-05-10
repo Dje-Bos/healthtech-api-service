@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.measurement.CreateTempDto;
 import com.boyarsky.apiservice.dto.measurement.CreateWeightDto;
+import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.WeightService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +30,7 @@ public class WeightController {
 
     @PostMapping
     @Operation(description = "Create new weight measurement", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<?> createWeight(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateWeightDto createWeightDto) {
+    public ResponseEntity<MeasurementDto> createWeight(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateWeightDto createWeightDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(weightService.createForUser(createWeightDto, user.getId()));
     }
 

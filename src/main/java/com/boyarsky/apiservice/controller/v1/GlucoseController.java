@@ -1,6 +1,7 @@
 package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.measurement.CreateGlucoseDto;
+import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.GlucoseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +21,7 @@ import static com.boyarsky.apiservice.controller.ApiConstants.API_VERSION_1;
 @RestController
 @RequestMapping(API_VERSION_1 + "/measurements/glucose")
 public class GlucoseController {
-    private GlucoseService glucoseService;
+    private final GlucoseService glucoseService;
 
     public GlucoseController(GlucoseService glucoseService) {
         this.glucoseService = glucoseService;
@@ -28,7 +29,7 @@ public class GlucoseController {
 
     @PostMapping
     @Operation(description = "Create new glucose measurement", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<?> createGlucose(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateGlucoseDto createGlucoseRequest) {
+    public ResponseEntity<MeasurementDto> createGlucose(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateGlucoseDto createGlucoseRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(glucoseService.createForUser(createGlucoseRequest, user.getId()));
     }
 }

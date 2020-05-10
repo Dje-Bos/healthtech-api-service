@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.measurement.CreateTempDto;
 import com.boyarsky.apiservice.dto.measurement.CreateWeightDto;
+import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.TemperatureService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +30,7 @@ public class TemperatureController {
 
     @PostMapping
     @Operation(description = "Create new temperature measurement", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<?> createWeight(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateTempDto createTempDto) {
+    public ResponseEntity<MeasurementDto> createWeight(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateTempDto createTempDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(tempService.createForUser(createTempDto, user.getId()));
     }
 }

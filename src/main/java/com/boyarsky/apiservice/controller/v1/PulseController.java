@@ -1,6 +1,7 @@
 package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.measurement.CreatePulseDto;
+import com.boyarsky.apiservice.dto.measurement.MeasurementDto;
 import com.boyarsky.apiservice.security.UserPrincipal;
 import com.boyarsky.apiservice.service.PulseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +29,7 @@ public class PulseController {
 
     @PostMapping
     @Operation(description = "Create new pulse measurement", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<?> createPulse(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreatePulseDto createPulseDto) {
+    public ResponseEntity<MeasurementDto> createPulse(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreatePulseDto createPulseDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(pulseService.createForUser(createPulseDto, user.getId()));
     }
 
