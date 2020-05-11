@@ -14,8 +14,6 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
-@Table(name = "pulse_measurements")
 public class PulseMeasurement extends Measurement {
-    @Column(nullable = false)
     private Integer pulse;
 }

@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.service.impl;
 
 import com.boyarsky.apiservice.dto.SignUpRequestDto;
 import com.boyarsky.apiservice.dto.UserDto;
+import com.boyarsky.apiservice.dto.UserUpdateDto;
 import com.boyarsky.apiservice.entity.user.AuthType;
 import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.repository.UserRepository;
@@ -60,5 +61,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepository.getUserById(userId);
+    }
+
+    @Override
+    @Transactional
+    public UserDto update(Long userId, UserUpdateDto userUpdateDto) {
+        User userById = userRepository.getUserById(userId);
+        USER_MAPPER.update(userUpdateDto, userById);
+        return USER_MAPPER.toDto(userRepository.save(userById));
     }
 }

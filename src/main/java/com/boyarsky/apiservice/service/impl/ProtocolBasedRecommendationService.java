@@ -34,7 +34,7 @@ public class ProtocolBasedRecommendationService implements RecommendationService
 
     @Override
     public List<RecommendationDto> findRecommendationsForUser(Long userId, ZonedDateTime startDateTime, ZonedDateTime endDateTime) {
-        List<Measurement> userMeasurements = repository.findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeDesc(userId, startDateTime.toLocalDateTime(), endDateTime.toLocalDateTime());
+        List<Measurement> userMeasurements = repository.findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeAsc(userId, startDateTime.toLocalDateTime(), endDateTime.toLocalDateTime());
         ResponseEntity<ProtocolValidationResult[]> protocolValidationResponse = restTemplate.postForEntity(recommendationServiceUrl + "/v1/protocols", userMeasurements.stream().map(MeasurementUtil::toDto).collect(Collectors.toList()), ProtocolValidationResult[].class);
         if (protocolValidationResponse.getStatusCode().is2xxSuccessful()) {
             return Arrays.stream(protocolValidationResponse.getBody())

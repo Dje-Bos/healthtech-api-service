@@ -2,6 +2,7 @@ package com.boyarsky.apiservice.controller.v1;
 
 import com.boyarsky.apiservice.dto.RoleDto;
 import com.boyarsky.apiservice.dto.UserDto;
+import com.boyarsky.apiservice.dto.UserUpdateDto;
 import com.boyarsky.apiservice.entity.user.Role;
 import com.boyarsky.apiservice.entity.user.User;
 import com.boyarsky.apiservice.repository.RoleRepository;
@@ -15,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,6 +69,12 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, format("User not found: uid=%s", userPrincipal.getId()));
         }
         return USER_MAPPER.toDto(user);
+    }
+
+    @PutMapping
+    @Operation(description = "Update current user", security = @SecurityRequirement(name = "JWT"))
+    public UserDto updateCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody UserUpdateDto userDto) {
+        return userService.update(userPrincipal.getId(), userDto);
     }
 
     @DeleteMapping

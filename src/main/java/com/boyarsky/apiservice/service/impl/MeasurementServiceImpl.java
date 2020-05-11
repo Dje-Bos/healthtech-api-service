@@ -68,9 +68,9 @@ public class MeasurementServiceImpl implements MeasurementService {
         }
     }
 
-        @Override
+    @Override
     public List<MeasurementDto> getInTimeRange(Long userId, LocalDateTime start, LocalDateTime end) {
-        return measurementRepository.findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeDesc(userId, start, end).stream()
+        return measurementRepository.findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeAsc(userId, start, end).stream()
                 .map(MeasurementUtil::toDto)
                 .collect(Collectors.toList());
     }

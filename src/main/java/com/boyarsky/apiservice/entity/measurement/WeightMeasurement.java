@@ -14,8 +14,6 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
-@Table(name = "weight_measurements")
 public class WeightMeasurement extends Measurement {
-    @Column(nullable = false)
     private Float weight;
 }

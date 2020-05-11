@@ -14,8 +14,6 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
-@Table(name = "temp_measurements")
 public class TempMeasurement extends Measurement {
-    @Column(nullable = false)
     private Float temp;
 }

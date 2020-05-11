@@ -12,8 +12,6 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
-@Table(name = "glucose_measurements")
 public class GlucoseMeasurement extends Measurement {
-    @Column(nullable = false)
     private Float glucose;
 }

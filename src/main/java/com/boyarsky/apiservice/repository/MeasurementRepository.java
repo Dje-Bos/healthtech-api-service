@@ -16,7 +16,7 @@ import java.util.UUID;
 @Repository
 public interface MeasurementRepository extends JpaRepository<Measurement, UUID> {
 
-    List<Measurement> findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeDesc(Long userId, LocalDateTime start, LocalDateTime end);
+    List<Measurement> findByUserIdAndCreatedTimeIsBetweenOrderByCreatedTimeAsc(Long userId, LocalDateTime start, LocalDateTime end);
 
     void removeAllByUser(User user);
 

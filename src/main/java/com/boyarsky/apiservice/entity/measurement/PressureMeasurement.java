@@ -14,10 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
-@Table(name = "pressure_measurements")
 public class PressureMeasurement extends Measurement {
-    @Column(nullable = false)
     private Integer systolic;
-    @Column(nullable = false)
     private Integer diastolic;
 }
