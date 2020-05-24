@@ -27,4 +27,16 @@ class MeasurementControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
+
+    @Test
+    void shouldGetByTypes() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(API_VERSION_1 + "/measurement?page=0&types=PULSE"))
+                .andDo(print());
+    }
+
+    @Test
+    void shouldGetInTimerange() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(API_VERSION_1 + "/measurement?start=0&end=1"))
+                .andDo(print());
+    }
 }

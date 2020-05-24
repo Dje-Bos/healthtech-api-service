@@ -30,7 +30,7 @@ public class TemperatureController {
 
     @PostMapping
     @Operation(description = "Create new temperature measurement", security = @SecurityRequirement(name = "JWT"))
-    public ResponseEntity<MeasurementDto> createWeight(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateTempDto createTempDto) {
+    public ResponseEntity<MeasurementDto> createTemperature(@AuthenticationPrincipal UserPrincipal user, @Valid @RequestBody CreateTempDto createTempDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(tempService.createForUser(createTempDto, user.getId()));
     }
 }

@@ -12,8 +12,8 @@ import static com.boyarsky.apiservice.mapper.TempMeasurementMapper.TEMP_MAPPER;
 
 @Service
 public class TemperatureServiceImpl implements TemperatureService {
-    private MeasurementRepository measurementRepository;
-    private UserRepository userRepository;
+    private final MeasurementRepository measurementRepository;
+    private final UserRepository userRepository;
 
     public TemperatureServiceImpl(MeasurementRepository measurementRepository, UserRepository userRepository) {
         this.measurementRepository = measurementRepository;
